@@ -7,9 +7,9 @@ export class ChatRequest {
 }
 
 export class ChatResponse {
-    answer: string;
+    response: string;
 
-    constructor(answer: string) {
-        this.answer = answer;
+    constructor(response: string) {
+        this.response = response;
     }
 }

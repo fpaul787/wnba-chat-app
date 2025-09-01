@@ -43,7 +43,7 @@ export class App {
     this.chatService.sendMessage(query).subscribe({
       next: (res) => {
         const updated = this.messagesSubject.value;
-        this.messagesSubject.next([...updated, { role: 'assistant', content: res.answer || 'No response' }]);
+        this.messagesSubject.next([...updated, { role: 'assistant', content: res.response || 'No response' }]);
       },
       error: () => {
         const updated = this.messagesSubject.value;
