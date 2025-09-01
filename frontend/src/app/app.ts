@@ -9,4 +9,14 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('wnba-chat');
+
+  userMessage = '';
+
+  ngOnInit() {
+    // Initialize user message or perform any setup logic here
+  }
+
+  sendMessage(){
+    const query = this.userMessage.trim();
+  }
 }
