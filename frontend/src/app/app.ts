@@ -28,10 +28,6 @@ export class App {
 
   constructor(private chatService: ChatService) {}
 
-  ngOnInit() {
-    // Initialize user message or perform any setup logic here
-  }
-
   sendMessage(){
     const query = this.userMessage.trim();
     if (!query) return;
