@@ -7,10 +7,10 @@ class RagService:
         self.vector_store = None
         self.embedding_model = get_embedding_model()
 
-    def __create_rag_chain__(self, prompt: str):
+    def __create_rag_chain__(self, prompt: ChatPromptTemplate):
         pass
 
-    def __create_chat_model_prompt__(self):
+    def __create_chat_model_prompt__(self, query: str) -> ChatPromptTemplate:
         template = """
         Use the following pieces of context to answer the question at the end. 
         Please follow the following rules:
