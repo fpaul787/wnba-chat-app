@@ -29,7 +29,7 @@ class RagService:
         )
         return rag_chain
 
-    def __create_chat_prompt__(self, query: str) -> ChatPromptTemplate:
+    def __create_chat_prompt__(self) -> ChatPromptTemplate:
         template = """
         Use the following pieces of context to answer the question at the end. 
         Please follow the following rules:
@@ -43,7 +43,7 @@ class RagService:
         return prompt
 
     def __generate_response__(self, query: str) -> dict:
-        prompt = self.__create_chat_prompt__(query)
+        prompt = self.__create_chat_prompt__()
         rag_chain = self.__create_rag_chain__(prompt)
         response = rag_chain.invoke(query)
         return {
