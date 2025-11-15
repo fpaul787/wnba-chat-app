@@ -4,7 +4,7 @@ from rest_framework import status
 
 from chatapi.serializers import ChatSerializer
 
-from services.rag_service import RagService
+from backend.services.langchain_rag_service import RagService
 
 rag_service = RagService()
 
