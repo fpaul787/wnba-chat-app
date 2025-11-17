@@ -1,4 +1,10 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC # About
+# MAGIC This notebook imports the json data and cleanss up the data. It also saves the clean dataset as a delta table on Databricks.
+
+# COMMAND ----------
+
 # MAGIC %pip install pinecone
 
 # COMMAND ----------
@@ -42,8 +48,26 @@ display(df)
 
 from pyspark.sql.functions import regexp_replace
 # remove newlines in text column
-df = df.withColumn("text", regexp_replace("text", "\n", " "))
-display(df)
+clean_df = df.withColumn("text", regexp_replace("text", "\n", " "))
+display(clean_df)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC # Save to Delta Table
+
+# COMMAND ----------
+
+catalog = "frantzpaul_tech"
+schema = "wnba_chat"
+
+# COMMAND ----------
+
+spark.sql(f"create database if not exists {catalog}.{schema}")
+
+# COMMAND ----------
+
+clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles")
 
 # COMMAND ----------
 
