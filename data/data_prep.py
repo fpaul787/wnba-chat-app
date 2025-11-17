@@ -1,4 +1,12 @@
 # Databricks notebook source
+# MAGIC %pip install pinecone
+
+# COMMAND ----------
+
+# MAGIC %restart_python
+
+# COMMAND ----------
+
 import json
 catalog = "frantzpaul_tech"
 schema = "wnba_rag"
@@ -22,6 +30,20 @@ display(df)
 
 # save to table
 # spark.createDataFrame(data).write.mode("overwrite").saveAsTable("wnba_news")
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC # Clean Data
+# MAGIC
+# MAGIC - Remove newlines in text column
+
+# COMMAND ----------
+
+from pyspark.sql.functions import regexp_replace
+# remove newlines in text column
+df = df.withColumn("text", regexp_replace("text", "\n", " "))
+display(df)
 
 # COMMAND ----------
 
