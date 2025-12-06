@@ -11,4 +11,17 @@ data.count()
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC # Setting up Pinecone
+
+# COMMAND ----------
+
+def get_pinecone_api_key():
+  api_key = ""
+  return api_key
+
+PINECONE_KEY = get_pinecone_api_key()
+
+# COMMAND ----------
+
 
