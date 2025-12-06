@@ -1,4 +1,12 @@
 # Databricks notebook source
+# MAGIC %pip install pinecone
+
+# COMMAND ----------
+
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
 catalog = "frantzpaul_tech"
 schema = "wnba_chat"
 table_name = "news_articles"
@@ -21,6 +29,11 @@ def get_pinecone_api_key():
   return api_key
 
 PINECONE_KEY = get_pinecone_api_key()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC # Setting up  Pinecone Index
 
 # COMMAND ----------
 
