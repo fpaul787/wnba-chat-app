@@ -37,4 +37,31 @@ PINECONE_KEY = get_pinecone_api_key()
 
 # COMMAND ----------
 
+from pinecone import Pinecone
 
+pc = Pinecone(
+    api_key=PINECONE_KEY
+)
+
+# COMMAND ----------
+
+index_name = "wnba_chat_pinecone_rag"
+from pinecone import ServerlessSpec
+
+if not pc.has_index(index_name):
+  pc.create_index(
+      index_name, 
+      dimension=1536,
+      metric="cosine",
+       # parameters for the free tier index
+        spec=ServerlessSpec(
+            cloud="aws",
+            region="us-east-1"
+        )
+  )
+
+# Initialize index client
+index = pc.Index(name=index_name)
+
+# View index stats
+index.describe_index_stats()
