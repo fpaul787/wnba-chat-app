@@ -68,7 +68,3 @@ spark.sql(f"create database if not exists {catalog}.{schema}")
 # COMMAND ----------
 
 clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles")
-
-# COMMAND ----------
-
-
