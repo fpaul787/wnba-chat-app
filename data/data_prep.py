@@ -54,6 +54,11 @@ display(clean_df)
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC # Preprocess Data
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC # Save to Delta Table
 
 # COMMAND ----------
