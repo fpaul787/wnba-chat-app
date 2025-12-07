@@ -58,6 +58,19 @@ display(clean_df)
 
 # COMMAND ----------
 
+from pyspark.sql import functions as F
+from pyspark.sql import types as T
+
+# Simple Chunking
+def chunk_text(text, chunk_size=1000):
+    if text is None:
+        return []
+    
+    words = text.split()
+    chunks = [" ".join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Save to Delta Table
 
