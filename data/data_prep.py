@@ -62,12 +62,20 @@ from pyspark.sql import functions as F
 from pyspark.sql import types as T
 
 # Simple Chunking
+@udf(returnType=T.ArrayType(T.StringType()))
 def chunk_text(text, chunk_size=1000):
     if text is None:
         return []
     
     words = text.split()
     chunks = [" ".join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
+    return chunks
+
+# COMMAND ----------
+
+# Apply UDF
+# chunked_df = clean_df.withColumn("chunked_text", chunk_text(F.col("text"), 1000))
+# display(chunked_df)
 
 # COMMAND ----------
 
