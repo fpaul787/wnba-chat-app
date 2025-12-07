@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %pip install pinecone
+# MAGIC %pip install pinecone openai
 
 # COMMAND ----------
 
@@ -25,7 +25,7 @@ data.count()
 # COMMAND ----------
 
 def get_pinecone_api_key():
-  api_key = ""
+  api_key = dbutils.secrets.get(scope="wnba_chat_app", key="pinecone")
   return api_key
 
 PINECONE_KEY = get_pinecone_api_key()
@@ -45,7 +45,7 @@ pc = Pinecone(
 
 # COMMAND ----------
 
-index_name = "wnba_chat_pinecone_rag"
+index_name = "wnba-chat-pinecone-rag"
 from pinecone import ServerlessSpec
 
 if not pc.has_index(index_name):
@@ -65,3 +65,13 @@ index = pc.Index(name=index_name)
 
 # View index stats
 index.describe_index_stats()
+
+# COMMAND ----------
+
+from openai import OpenAI
+client = OpenAI()
+
+response = client.embeddings.create(
+  model="text-embedding-ada-002",
+  input="Hello world"
+)
