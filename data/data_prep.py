@@ -38,8 +38,8 @@ table_name = "news_articles"
 
 # COMMAND ----------
 
-data = spark.read.table(f"{catalog}.{schema}.{table_name}")
-display(data)
+df = spark.read.table(f"{catalog}.{schema}.{table_name}")
+display(df)
 
 # COMMAND ----------
 
@@ -52,7 +52,7 @@ display(data)
 
 from pyspark.sql.functions import regexp_replace
 # remove newlines in text column
-clean_df = df.withColumn("text", regexp_replace("text", "\n", " "))
+clean_df = df.withColumn("text_clean", regexp_replace("text", "\n", " "))
 display(clean_df)
 
 # COMMAND ----------
