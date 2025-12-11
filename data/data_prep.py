@@ -46,7 +46,14 @@ display(df)
 # MAGIC %md
 # MAGIC # Clean Data
 # MAGIC
+# MAGIC - Drop row with empty text column
 # MAGIC - Remove newlines in text column
+
+# COMMAND ----------
+
+# drop row with empty text column
+df = df.filter(df.text != "")
+display(df)
 
 # COMMAND ----------
 
@@ -77,9 +84,13 @@ def chunk_text(text, chunk_size=1000):
 
 # COMMAND ----------
 
+from pyspark.sql.types import StringType
 # Apply UDF
-# chunked_df = clean_df.withColumn("chunked_text", chunk_text(F.col("text"), 1000))
-# display(chunked_df)
+chunked_df = clean_df.withColumn(
+    "chunked_text",
+    chunk_text(F.col("text_clean"))
+)
+display(chunked_df)
 
 # COMMAND ----------
 
