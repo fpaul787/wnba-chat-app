@@ -65,6 +65,24 @@ display(clean_df)
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC # Save to Delta Table
+
+# COMMAND ----------
+
+catalog = "frantzpaul_tech"
+schema = "wnba_chat"
+
+# COMMAND ----------
+
+spark.sql(f"create database if not exists {catalog}.{schema}")
+
+# COMMAND ----------
+
+clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles")
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC # Preprocess Data
 
 # COMMAND ----------
@@ -95,17 +113,4 @@ display(chunked_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC # Save to Delta Table
-
-# COMMAND ----------
-
-catalog = "frantzpaul_tech"
-schema = "wnba_chat"
-
-# COMMAND ----------
-
-spark.sql(f"create database if not exists {catalog}.{schema}")
-
-# COMMAND ----------
-
-clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles")
+# MAGIC
