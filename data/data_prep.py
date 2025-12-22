@@ -16,7 +16,7 @@
 import json
 catalog = "frantzpaul_tech"
 schema = "wnba_chat"
-table_name = "news_articles"
+table_name = "news_articles_bronze"
 
 # COMMAND ----------
 
@@ -25,16 +25,16 @@ table_name = "news_articles"
 
 # COMMAND ----------
 
-# path = "./wnba_news.json"
-# with open(path, "r") as f:
-#   data = json.load(f)
+path = "./wnba_news.json"
+with open(path, "r") as f:
+  data = json.load(f)
 
-# # create dataframe
-# df = spark.createDataFrame(data)
-# display(df)
+# create dataframe
+df = spark.createDataFrame(data)
+display(df)
 
-# # save to table
-# # spark.createDataFrame(data).write.mode("overwrite").saveAsTable("wnba_news")
+# save to table
+spark.createDataFrame(data).write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.{table_name}")
 
 # COMMAND ----------
 
@@ -71,6 +71,7 @@ display(clean_df)
 
 catalog = "frantzpaul_tech"
 schema = "wnba_chat"
+table_name = "news_articles_clean"
 
 # COMMAND ----------
 
@@ -78,7 +79,8 @@ spark.sql(f"create database if not exists {catalog}.{schema}")
 
 # COMMAND ----------
 
-clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles")
+clean_df = clean_df.drop("text")
+clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.{table_name}")
 
 # COMMAND ----------
 
