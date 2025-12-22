@@ -115,4 +115,8 @@ display(chunked_df)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC
+# MAGIC # Save Data to Delta Table
+
+# COMMAND ----------
+
+chunked_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles_chunked")
