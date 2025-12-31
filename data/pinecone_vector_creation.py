@@ -9,7 +9,7 @@ dbutils.library.restartPython()
 
 catalog = "frantzpaul_tech"
 schema = "wnba_chat"
-table_name = "news_articles"
+table_name = "news_articles_chunked"
 
 # COMMAND ----------
 
@@ -75,3 +75,28 @@ response = client.embeddings.create(
   model="text-embedding-ada-002",
   input="Hello world"
 )
+
+# COMMAND ----------
+
+def create_embeddings(df):
+    vectors_to_upsert = []
+
+    for idx, row in df.iterrows():
+        for chunk_idx, chunk in enumerate(row['chunked_text']):
+            vector_id = f"{idx}_{chunk_idx}"
+
+            # Generate embedding
+            embedding = None
+
+            metadata = {
+                "date": row['date'],
+                "source": row['source'],
+                "title": row['title']
+            }
+
+            vectors_to_upsert.append((vector_id, embedding, metadata))
+
+    if vectors_to_upsert:
+        index.upsert(vectors=vectors_to_upsert)
+
+    return vectors_to_upsert
