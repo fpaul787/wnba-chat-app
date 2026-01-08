@@ -102,7 +102,6 @@ chunked_df = clean_df.withColumn(
     "chunked_text",
     chunk_text(F.col("text_clean"))
 )
-display(chunked_df)
 
 # COMMAND ----------
 
@@ -121,6 +120,10 @@ chunks_df = (
         "date"
     )
 )
+
+# COMMAND ----------
+
+display(chunks_df)
 
 # COMMAND ----------
 
