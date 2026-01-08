@@ -5,14 +5,6 @@
 
 # COMMAND ----------
 
-# MAGIC %pip install pinecone
-
-# COMMAND ----------
-
-# MAGIC %restart_python
-
-# COMMAND ----------
-
 import json
 catalog = "frantzpaul_tech"
 schema = "wnba_chat"
@@ -114,9 +106,27 @@ display(chunked_df)
 
 # COMMAND ----------
 
+from pyspark.sql.functions import explode, col, monotonically_increasing_id
+
+chunks_df = (
+    chunked_df
+    .withColumn("chunk_text", explode(col("chunked_text")))
+    .withColumn("chunk_id", monotonically_increasing_id())
+    .select(
+        "chunk_id",
+        "chunk_text",
+        "title",
+        "source",
+        "url",
+        "date"
+    )
+)
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC # Save Data to Delta Table
 
 # COMMAND ----------
 
-chunked_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles_chunked")
+chunks_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.news_articles_chunked")
