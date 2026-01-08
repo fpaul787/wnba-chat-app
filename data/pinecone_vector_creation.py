@@ -13,9 +13,8 @@ table_name = "news_articles_chunked"
 
 # COMMAND ----------
 
-data = spark.read.table(f"{catalog}.{schema}.{table_name}")
-display(data)
-data.count()
+data_df = spark.read.table(f"{catalog}.{schema}.{table_name}")
+display(data_df)
 
 # COMMAND ----------
 
@@ -69,34 +68,42 @@ index.describe_index_stats()
 # COMMAND ----------
 
 from openai import OpenAI
-client = OpenAI()
 
-response = client.embeddings.create(
-  model="text-embedding-ada-002",
-  input="Hello world"
+client = OpenAI(
+    api_key=dbutils.secrets.get(scope="wnba_chat_app", key="openai")
 )
+
+def embed_batch(texts):
+  response = client.embeddings.create(
+    model="text-embedding-ada-002",
+    input=texts
+  )
+  return [r.embedding for r in response.data]
 
 # COMMAND ----------
 
-def create_embeddings(df):
-    vectors_to_upsert = []
+BATCH_SIZE = 200
 
-    for idx, row in df.iterrows():
-        for chunk_idx, chunk in enumerate(row['chunked_text']):
-            vector_id = f"{idx}_{chunk_idx}"
+pdf = data_df.toPandas()
 
-            # Generate embedding
-            embedding = None
+for i in range(0, len(pdf), BATCH_SIZE):
+    batch = pdf.iloc[i:i+BATCH_SIZE]
 
-            metadata = {
-                "date": row['date'],
-                "source": row['source'],
-                "title": row['title']
+    embeddings = embed_batch(batch["chunk_text"].tolist())
+
+    vectors = []
+    for j, emb in enumerate(embeddings):
+        row = batch.iloc[j]
+        vectors.append((
+            f"{row.chunk_id}",   # vector ID
+            emb,
+            {
+                "title": row.title,
+                "source": row.source,
+                "url": row.url,
+                "date": row.date
             }
+        ))
 
-            vectors_to_upsert.append((vector_id, embedding, metadata))
+    index.upsert(vectors=vectors)
 
-    if vectors_to_upsert:
-        index.upsert(vectors=vectors_to_upsert)
-
-    return vectors_to_upsert
