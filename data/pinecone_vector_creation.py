@@ -107,3 +107,15 @@ for i in range(0, len(pdf), BATCH_SIZE):
 
     index.upsert(vectors=vectors)
 
+
+# COMMAND ----------
+
+query = "Angel Reese"
+
+query_embedding = embed_batch([query])[0]
+
+results = index.query(
+    vector=query_embedding,
+    top_k=5,
+    include_metadata=True
+)
