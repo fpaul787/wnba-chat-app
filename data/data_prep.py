@@ -61,16 +61,11 @@ display(clean_df)
 
 # COMMAND ----------
 
-catalog = "frantzpaul_tech"
-schema = "wnba_chat"
-table_name = "news_articles_clean"
-
-# COMMAND ----------
-
 spark.sql(f"create database if not exists {catalog}.{schema}")
 
 # COMMAND ----------
 
+table_name = "news_articles_clean"
 clean_df = clean_df.drop("text")
 clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.{table_name}")
 
