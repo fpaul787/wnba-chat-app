@@ -92,7 +92,6 @@ def chunk_text(text0):
 
 # COMMAND ----------
 
-from pyspark.sql.types import StringType
 # Apply UDF
 chunked_df = clean_df.withColumn(
     "chunked_text",
