@@ -81,11 +81,11 @@ clean_df.write.mode("overwrite").saveAsTable(f"{catalog}.{schema}.{table_name}")
 
 # COMMAND ----------
 
-from pyspark.sql import functions as F
-from pyspark.sql import types as T
+from pyspark.sql.functions import udf
+from pyspark.sql.types import ArrayType, StringType
 
 # Simple Chunking
-@udf(returnType=T.ArrayType(T.StringType()))
+@udf(returnType=ArrayType(StringType()))
 def chunk_text(text, chunk_size=1000):
     if text is None:
         return []
