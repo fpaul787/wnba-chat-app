@@ -1,4 +1,10 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC # About
+# MAGIC This notebook sets up the vector embedding process using OpenAI for embeddings creation and 
+
+# COMMAND ----------
+
 # MAGIC %pip install pinecone openai
 
 # COMMAND ----------
@@ -119,3 +125,7 @@ results = index.query(
     top_k=5,
     include_metadata=True
 )
+
+# COMMAND ----------
+
+display(results)

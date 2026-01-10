@@ -1,7 +1,12 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # About
-# MAGIC This notebook imports the json data and cleanss up the data. It also saves the clean dataset as a delta table on Databricks.
+# MAGIC This notebook imports the json data and cleans up the data. Afterwards, it preprocesses the data to chunk our data into chunks. It also saves the clean dataset as a delta table on Databricks.
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC # Define Variables
 
 # COMMAND ----------
 
