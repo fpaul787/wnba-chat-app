@@ -1,8 +1,19 @@
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings, OpenAIEmbeddings
+from pinecone import Pinecone
 
-def get_vector_store(index_name: str, embeddings: HuggingFaceEmbeddings | OpenAIEmbeddings) -> FAISS:
-    """
-    Get the vector store instance.
-    """
-    return FAISS.load_local(index_name, embeddings=embeddings)
+class VectorStoreService:
+    def __init__(self):
+        self.index_name = "your-index-name"
+        self.client = Pinecone(api_key="")
+        self.index = self.client.Index(self.index_name)
+
+    
+    def query(self, embedding: list[float], top_k: int = 5, include_metadata: bool = True):
+        """
+        Query the vector store with the given embedding.
+        """
+        results = self.index.query(
+            vector=embedding,
+            top_k=top_k,
+            include_metadata=include_metadata
+        )
+        return results.matches # pyright: ignore[reportAttributeAccessIssue]
