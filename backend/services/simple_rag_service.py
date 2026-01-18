@@ -1,6 +1,7 @@
 from services.embedding_service import EmbeddingService
 from services.vector_store_service import VectorStoreService
 from services.model_service import ModelService
+from typing import Dict
 
 class SimpleRagService:
     def __init__(self):
@@ -23,7 +24,7 @@ class SimpleRagService:
 
         return results
     
-    def generate_answer(self, query: str):
+    def generate_answer(self, query: str) -> Dict:
         """
         Generate an answer to the query using the LLM and context from the vector store.
         """
@@ -43,4 +44,4 @@ class SimpleRagService:
                 {"role": "user", "content": prompt}
             ]
         )
-        return response
+        return {"answer": response}
