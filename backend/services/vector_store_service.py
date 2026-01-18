@@ -1,4 +1,5 @@
 from pinecone import Pinecone
+from typing import List
 
 class VectorStoreService:
     def __init__(self):
@@ -7,7 +8,7 @@ class VectorStoreService:
         self.index = self.client.Index(self.index_name)
 
     
-    def query(self, embedding: list[float], top_k: int = 5, include_metadata: bool = True):
+    def query(self, embedding: List[float], top_k: int = 5, include_metadata: bool = True):
         """
         Query the vector store with the given embedding.
         """
