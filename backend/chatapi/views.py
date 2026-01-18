@@ -4,9 +4,9 @@ from rest_framework import status
 
 from chatapi.serializers import ChatSerializer
 
-from backend.services.langchain_rag_service import RagService
+from backend.services.simple_rag_service import SimpleRagService
 
-rag_service = RagService()
+rag_service = SimpleRagService()
 
 class ChatView(APIView):
     def post(self, request):
@@ -18,7 +18,7 @@ class ChatView(APIView):
         message = serializer.validated_data.get("message", "")
         
         try:
-            response = rag_service.query(message)
+            response = rag_service.generate_answer(message)
             return Response({"response": response.get("answer", "No response")}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
