@@ -1,6 +1,6 @@
-from services.embedding_service import EmbeddingService
-from services.vector_store_service import VectorStoreService
-from services.model_service import ModelService
+from embedding_service import EmbeddingService
+from vector_store_service import VectorStoreService
+from model_service import ModelService
 from typing import Dict
 
 class SimpleRagService:
