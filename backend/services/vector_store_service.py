@@ -1,11 +1,19 @@
 from pinecone import Pinecone
 from typing import List
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class VectorStoreService:
     def __init__(self):
-        self.index_name = "your-index-name"
-        self.client = Pinecone(api_key="")
-        self.index = self.client.Index(self.index_name)
+        self.index_name = "wnba-chat-pinecone-rag"
+        self.client = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+        try:
+            self.index = self.client.Index(self.index_name)
+        except Exception as e:
+            print(f"Error initializing Pinecone index: {e}")
+            raise
 
     
     def query(self, embedding: List[float], top_k: int = 5, include_metadata: bool = True):
