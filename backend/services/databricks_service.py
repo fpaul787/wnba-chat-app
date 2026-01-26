@@ -13,7 +13,7 @@ class DatabricksService:
         )
         self.cursor = self.connection.cursor()
     
-    def __execute_query(self, query: str):
+    def execute_query(self, query: str):
         """
         Execute a SQL query against the Databricks SQL warehouse.
         """
