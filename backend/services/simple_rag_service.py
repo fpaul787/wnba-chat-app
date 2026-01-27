@@ -32,11 +32,27 @@ class SimpleRagService:
         """
         return self.content_store.get_content_by_ids(ids)
         
+    def __validate_query(self, query: str):
+        # Type validation
+        if not isinstance(query, str):
+            raise TypeError("Query must be a string")
+        
+        # Empty/whitespace validation
+        if not query or not query.strip():
+            raise ValueError("Query cannot be empty or only whitespace")
+        
+        # Length validation
+        if len(query) > 1500:  # Adjust based on your needs
+            raise ValueError("Query too long")
+        
+        if len(query.strip()) < 3:
+            raise ValueError("Query too short (minimum 3 characters)")
     
     def generate_answer(self, query: str) -> Dict:
         """
         Generate an answer to the query using the LLM and context from the vector store.
         """
+        self.__validate_query(query)
         vector_results = self.query_vector_store(query)
         ids = [match.id for match in vector_results]
         content_chunks_data = self.__fetch_chunks(ids)
