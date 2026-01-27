@@ -44,7 +44,7 @@ class SimpleRagService:
             raise ValueError("Query cannot be empty or only whitespace")
         
         # Length validation
-        if len(query) > 1500:  # Adjust based on your needs
+        if len(query) > 1500:
             raise ValueError("Query too long")
         
         if len(query.strip()) < 3:

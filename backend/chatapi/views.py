@@ -29,7 +29,7 @@ class ChatView(APIView):
             raise ValueError("Message cannot be empty or only whitespace")
         
         # Length validation
-        if len(message) > 1500:  # Adjust based on your needs
+        if len(message) > 1500:
             raise ValueError("Message too long (maximum 1500 characters)")
         
         if len(message.strip()) < 3:
