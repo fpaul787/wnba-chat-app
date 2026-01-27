@@ -1,6 +1,6 @@
+from .databricks_service import DatabricksService
+from .models import Content
 from typing import List
-from databricks_service import DatabricksService
-from models import Content
 from contextlib import contextmanager
 
 class ContentStoreService:
@@ -8,7 +8,7 @@ class ContentStoreService:
     Service to interact with the content store that fetches text chunks.
     """
     def __init__(self):
-        
+        pass
 
     @contextmanager
     def _databricks_service(self):

@@ -1,5 +1,5 @@
 from pinecone import Pinecone
-from typing import Any, List, Optional
+from typing import Any, List
 import os
 from dotenv import load_dotenv
 

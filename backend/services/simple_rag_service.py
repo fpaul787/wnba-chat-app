@@ -1,8 +1,8 @@
-from models import Content
-from embedding_service import EmbeddingService
-from vector_store_service import VectorStoreService
-from model_service import ModelService
-from content_store import ContentStoreService
+from .models import Content
+from .embedding_service import EmbeddingService
+from .vector_store_service import VectorStoreService
+from .model_service import ModelService
+from .content_store import ContentStoreService
 from typing import Dict, List
 
 class SimpleRagService:
