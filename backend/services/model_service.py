@@ -11,7 +11,7 @@ MODEL_NAME = "gpt-4o-mini"
 
 class ModelService:
     """
-    Docstring for ModelService
+    Service to interact with the OpenAI chat model.
     """
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))

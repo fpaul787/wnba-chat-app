@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class VectorStoreService:
+    """
+    Service to interact with the Pinecone vector store.
+    """
     def __init__(self):
         self.index_name = "wnba-chat-pinecone-rag"
         
