@@ -14,27 +14,27 @@ class SimpleRagService:
         self.llm_model = ModelService()
         self.content_store = ContentStoreService()
 
-    def get_embedding(self, text: str):
+    def _get_embedding(self, text: str):
         """
         Get the embedding for the given text.
         """
         return self.embedding_service.embed_query(text)
     
-    def query_vector_store(self, query: str):
+    def _query_vector_store(self, query: str):
         """
         Query the vector store with the given text.
         """
-        query_embedding = self.get_embedding(query)
+        query_embedding = self._get_embedding(query)
         results = self.vector_store_service.query(query_embedding, top_k=5, include_metadata=True)
         return results
     
-    def __fetch_chunks(self, ids: List[str]) -> List[Content]:
+    def _fetch_chunks(self, ids: List[str]) -> List[Content]:
         """
         Fetch text chunks from Databricks based on the given IDs.
         """
         return self.content_store.get_content_by_ids(ids)
         
-    def __validate_query(self, query: str):
+    def _validate_query(self, query: str):
         # Type validation
         if not isinstance(query, str):
             raise TypeError("Query must be a string")
@@ -54,10 +54,10 @@ class SimpleRagService:
         """
         Generate an answer to the query using the LLM and context from the vector store.
         """
-        self.__validate_query(query)
-        vector_results = self.query_vector_store(query)
+        self._validate_query(query)
+        vector_results = self._query_vector_store(query)
         ids = [match.id for match in vector_results]
-        content_chunks_data = self.__fetch_chunks(ids)
+        content_chunks_data = self._fetch_chunks(ids)
         context_chunks = [content.text for content in content_chunks_data]
         context = "\n\n".join(context_chunks)
 
