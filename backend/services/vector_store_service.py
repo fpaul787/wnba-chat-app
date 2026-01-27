@@ -12,8 +12,7 @@ class VectorStoreService:
         try:
             self.index = self.client.Index(self.index_name)
         except Exception as e:
-            print(f"Error initializing Pinecone index: {e}")
-            raise
+            raise Exception(f"Error initializing Pinecone index: {e}")
 
     
     def query(self, embedding: List[float], top_k: int = 5, include_metadata: bool = True):
