@@ -1,3 +1,4 @@
+from typing import List
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
@@ -32,7 +33,7 @@ class EmbeddingService:
         """
         return model_name
     
-    def embed_query(self, text: str) -> list[float]:
+    def embed_query(self, text: str) -> List[float]:
         """
         Get the embedding for the given text.
         """
