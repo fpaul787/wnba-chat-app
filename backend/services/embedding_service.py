@@ -1,21 +1,47 @@
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from typing import List
+from openai import OpenAI
+from dotenv import load_dotenv
+import os
 
-model_name = 'sentence-transformers/all-MiniLM-L6-v2'
+load_dotenv()
+model_name = 'text-embedding-ada-002'
 
-def get_hf_embedding_model(cache_folder="./embeddings_cache"):
+class EmbeddingService:
     """
-    Get the Hugging Face embedding model.
+    Embedding service for generating text embeddings using OpenAI.
     """
-    embeddings = HuggingFaceEmbeddings(
-        model_name=get_embedding_model_name(),
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
-        cache_folder=cache_folder
-    )
-    return embeddings
+    def __init__(self):
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self._validated = False
 
-def get_embedding_model_name():
-    """
-    Get the name of the embedding model.
-    """
-    return model_name
+    def validate_connection(self) -> bool:
+        """
+        Optionally validate the OpenAI client connection.
+        Only call this when you need to verify the connection is working.
+        """
+        try:
+            self.client.models.list()
+            self._validated = True
+            return True
+        except Exception as e:
+            print(f"Error validating OpenAI client: {e}")
+            return False
+
+    def get_embedding_model_name(self) -> str:
+        """
+        Get the name of the embedding model.
+        """
+        return model_name
+    
+    def embed_query(self, text: str) -> List[float]:
+        """
+        Get the embedding for the given text.
+        """
+        try:
+            return self.client.embeddings.create(
+                input=text,
+                model=model_name
+            ).data[0].embedding
+        except Exception as e:
+            print(f"Error generating embedding: {e}")
+            raise

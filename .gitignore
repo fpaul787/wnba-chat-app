@@ -66,3 +66,4 @@ frontend/testem.log
 .DS_Store
 Thumbs.db
 
+backend/services/.env
