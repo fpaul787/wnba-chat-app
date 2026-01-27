@@ -1,5 +1,5 @@
 from pinecone import Pinecone
-from typing import List
+from typing import Any, List
 import os
 from dotenv import load_dotenv
 
@@ -15,7 +15,7 @@ class VectorStoreService:
             raise Exception(f"Error initializing Pinecone index: {e}")
 
     
-    def query(self, embedding: List[float], top_k: int = 5, include_metadata: bool = True):
+    def query(self, embedding: List[float], top_k: int = 5, include_metadata: bool = True) -> List[Any]:
         """
         Query the vector store with the given embedding.
         """
