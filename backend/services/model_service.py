@@ -26,9 +26,12 @@ class ModelService:
         """
         Query the chat model with the given messages.
         """
-        print(f"Querying {self.model_name} model ...")
-        response = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=messages
-        )
-        return response.choices[0].message.content
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model_name,
+                messages=messages
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            print(f"Error querying model: {e}")
+            raise
