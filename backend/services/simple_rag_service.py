@@ -8,6 +8,8 @@ from typing import Dict, List
 class SimpleRagService:
     def __init__(self):
         self.embedding_service = EmbeddingService()
+        if not self.embedding_service.validate_connection():
+            raise ConnectionError("Failed to validate EmbeddingService connection.")
         self.vector_store_service = VectorStoreService()
         self.llm_model = ModelService()
         self.content_store = ContentStoreService()
