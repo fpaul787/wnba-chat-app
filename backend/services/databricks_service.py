@@ -24,14 +24,56 @@ class DatabricksService:
     def execute_query(self, query: str):
         """
         Execute a SQL query against the Databricks SQL warehouse.
+        
+        Args:
+            query: SQL query string to execute
+            
+        Returns:
+            List of result rows or empty list if no results
+            
+        Raises:
+            ValueError: If query is empty or invalid
+            ConnectionError: If database connection is lost
+            RuntimeError: If query execution fails
         """
-        self.cursor.execute(query)
-        results = self.cursor.fetchall()
-        return results
+        # Input validation
+        if not query or not isinstance(query, str):
+            raise ValueError("Query must be a non-empty string")
+        
+        query = query.strip()
+        if not query:
+            raise ValueError("Query cannot be empty or only whitespace")
+        
+        try:
+            # Check if connection is still valid
+            if not self.connection or not self.cursor:
+                raise ConnectionError("Database connection not available")
+            
+            # Execute the query
+            self.cursor.execute(query)
+            
+            try:
+                results = self.cursor.fetchall()
+                return results if results is not None else []
+            except Exception as fetch_error:
+                raise RuntimeError(f"Failed to fetch query results: {fetch_error}")
+            
+        except Exception as e:
+            # Handle unexpected errors
+            raise RuntimeError(f"Unexpected error executing query: {e}")
     
     def close_connection(self):
         """
-        Close the database connection.
+        Close the database connection safely.
         """
-        self.cursor.close()
-        self.connection.close()
+        try:
+            if hasattr(self, 'cursor') and self.cursor:
+                self.cursor.close()
+        except Exception as e:
+            print(f"Error closing cursor: {e}")
+        
+        try:
+            if hasattr(self, 'connection') and self.connection:
+                self.connection.close()
+        except Exception as e:
+            print(f"Error closing connection: {e}")
