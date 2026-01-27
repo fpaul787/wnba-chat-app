@@ -5,7 +5,7 @@ from models import Content
 class ContentStoreService:
     def __init__(self):
         self.databricks_service = DatabricksService()
-        self.table_name = " frantzpaul_tech.wnba_chat.news_articles_chunked"
+        self.table_name = "frantzpaul_tech.wnba_chat.news_articles_chunked"
 
     def get_content_by_ids(self, ids: List[str]) -> List[Content]:
         id_list_str = ",".join([f"'{id_}'" for id_ in ids])
