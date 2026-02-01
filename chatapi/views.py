@@ -20,5 +20,9 @@ class ChatView(APIView):
         try:
             response = rag_service.generate_answer(message)
             return Response({"response": response.get("answer", "No response")}, status=status.HTTP_200_OK)
+        except (TypeError, ValueError) as e:
+            # Validation errors should return 400 Bad Request
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
+            # Other errors remain 500 Internal Server Error
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
