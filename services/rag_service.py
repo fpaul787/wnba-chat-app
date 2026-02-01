@@ -5,7 +5,7 @@ from .model_service import ModelService
 from .content_store import ContentStoreService
 from typing import Dict, List
 
-class SimpleRagService:
+class RagService:
     def __init__(self):
         self.embedding_service = EmbeddingService()
         if not self.embedding_service.validate_connection():

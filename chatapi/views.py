@@ -4,9 +4,9 @@ from rest_framework import status
 
 from chatapi.serializers import ChatSerializer
 
-from services.simple_rag_service import SimpleRagService
+from services.rag_service import RagService
 
-rag_service = SimpleRagService()
+rag_service = RagService()
 
 class ChatView(APIView):
     def post(self, request):

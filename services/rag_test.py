@@ -1,4 +1,4 @@
-from simple_rag_service import SimpleRagService
+from services.rag_service import SimpleRagService
 
 rag_service = SimpleRagService()
 query = "Who is Angel Reese?"
