@@ -1,11 +1,14 @@
 from pinecone import Pinecone
-from typing import Any, List, Optional
+from typing import Any, List
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
 class VectorStoreService:
+    """
+    Service to interact with the Pinecone vector store.
+    """
     def __init__(self):
         self.index_name = "wnba-chat-pinecone-rag"
         

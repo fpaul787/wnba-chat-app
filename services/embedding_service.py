@@ -2,6 +2,9 @@ from typing import List
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 model_name = 'text-embedding-ada-002'
@@ -24,7 +27,6 @@ class EmbeddingService:
             self._validated = True
             return True
         except Exception as e:
-            print(f"Error validating OpenAI client: {e}")
             return False
 
     def get_embedding_model_name(self) -> str:
@@ -43,5 +45,5 @@ class EmbeddingService:
                 model=model_name
             ).data[0].embedding
         except Exception as e:
-            print(f"Error generating embedding: {e}")
-            raise
+            logger.error(f"Failed to generate embedding for text (length: {len(text)}): {e}")
+            raise  # Re-raise the original exception

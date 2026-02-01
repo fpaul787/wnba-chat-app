@@ -1,61 +1,21 @@
 # --- Python (Django) ---
-backend/__pycache__/
-backend/*.py[cod]
-backend/*.pyo
-backend/*.pyd
-backend/*.pdb
-backend/*/__pycache__/*.pyc
-backend/*.so
-backend/*.egg-info/
-backend/*.egg
-backend/.env
-backend/env/
-backend/venv/
-backend/.env.*
-backend/db.sqlite3
-backend/media/
-backend/staticfiles/
+/__pycache__/
+/*.py[cod]
+/*.pyo
+/*.pyd
+/*.pdb
+/*/__pycache__/*.pyc
+/*.so
+/*.egg-info/
+/*.egg
+/.env
+/env/
+/venv/
+/.env.*
+/db.sqlite3
+/media/
+/staticfiles/
 *.pyc
-
-
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Compiled output
-frontend/dist
-frontend/tmp
-frontend/out-tsc
-frontend/bazel-out
-
-# Node
-frontend/node_modules
-npm-debug.log
-yarn-error.log
-
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# Miscellaneous
-frontend/.angular/cache
-frontend/.sass-cache/
-frontend/connect.lock
-frontend/coverage
-frontend/libpeerconnection.log
-frontend/testem.log
-/typings
 
 
 # --- IDE / Editor ---
@@ -65,5 +25,4 @@ frontend/testem.log
 *.swo
 .DS_Store
 Thumbs.db
-
-backend/services/.env
+*/.env

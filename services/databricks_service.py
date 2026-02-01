@@ -30,11 +30,6 @@ class DatabricksService:
             
         Returns:
             List of result rows or empty list if no results
-            
-        Raises:
-            ValueError: If query is empty or invalid
-            ConnectionError: If database connection is lost
-            RuntimeError: If query execution fails
         """
         # Input validation
         if not query or not isinstance(query, str):
