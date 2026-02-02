@@ -42,8 +42,10 @@ DATABRICKS_SERVER_HOSTNAME = env('DATABRICKS_SERVER_HOSTNAME')
 DATABRICKS_HTTP_PATH = env('DATABRICKS_HTTP_PATH')
 DATABRICKS_ACCESS_TOKEN = env('DATABRICKS_ACCESS_TOKEN')
 
-
-ALLOWED_HOSTS = []
+if DEBUG == True:
+    ALLOWED_HOSTS = ['127.0.0.1',]
+else:
+    ALLOWED_HOSTS = ['...fix..me']
 
 
 # Application definition
@@ -144,3 +146,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Security settings
+SECURE_HSTS_SECONDS = 3600
