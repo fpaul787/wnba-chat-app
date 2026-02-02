@@ -1,9 +1,6 @@
 from pinecone import Pinecone
 from typing import Any, List
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from django.conf import settings
 
 class VectorStoreService:
     """
@@ -12,9 +9,9 @@ class VectorStoreService:
     def __init__(self):
         self.index_name = "wnba-chat-pinecone-rag"
         
-        api_key = os.getenv("PINECONE_API_KEY")
+        api_key = settings.PINECONE_API_KEY
         if not api_key:
-            raise ValueError("PINECONE_API_KEY environment variable not set")
+            raise ValueError("PINECONE_API_KEY not configured in Django settings")
             
         try:
             self.client = Pinecone(api_key=api_key)

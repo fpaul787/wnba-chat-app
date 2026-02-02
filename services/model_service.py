@@ -1,11 +1,7 @@
 from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
 from typing import List
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
+from django.conf import settings
 
 MODEL_NAME = "gpt-4o-mini"
 
@@ -14,7 +10,7 @@ class ModelService:
     Service to interact with the OpenAI chat model.
     """
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
         try:
             self.client.models.list()
         except Exception as e:

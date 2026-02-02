@@ -1,14 +1,14 @@
 from databricks import sql
-import os
+from django.conf import settings
 
 class DatabricksService:
     """
     Service to connect and query Databricks SQL warehouse.
     """
     def __init__(self):
-        server_hostname = os.getenv("DATABRICKS_SERVER_HOSTNAME")
-        http_path = os.getenv("DATABRICKS_HTTP_PATH")
-        access_token = os.getenv("DATABRICKS_ACCESS_TOKEN")
+        server_hostname = settings.DATABRICKS_SERVER_HOSTNAME
+        http_path = settings.DATABRICKS_HTTP_PATH
+        access_token = settings.DATABRICKS_ACCESS_TOKEN
         
         try:
             self.connection = sql.connect(

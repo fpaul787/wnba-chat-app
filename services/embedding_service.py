@@ -1,12 +1,10 @@
 from typing import List
 from openai import OpenAI
-from dotenv import load_dotenv
-import os
+from django.conf import settings
 import logging
 
 logger = logging.getLogger(__name__)
 
-load_dotenv()
 model_name = 'text-embedding-ada-002'
 
 class EmbeddingService:
@@ -14,7 +12,7 @@ class EmbeddingService:
     Embedding service for generating text embeddings using OpenAI.
     """
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
         self._validated = False
 
     def validate_connection(self) -> bool:
