@@ -1,0 +1,41 @@
+name: Continous Integration and Delivery
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: false
+        default: 'main'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v3
+
+  linode:
+    name: Deploy
+    needs: "build"
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.LINODE_HOST }}
+          username: ${{ secrets.LINODE_USERNAME }}
+          key: ${{ secrets.LINODE_PRIVATE_KEY }}
+          port: ${{ secrets.LINODE_PORT }}
+          script: |
+            BRANCH=${{ github.event.inputs.branch || github.ref_name }}
+            echo "Deploying branch: $BRANCH"
+            cd ../applications/wnba_chat_api
+            sudo git fetch origin $BRANCH
+            sudo git checkout $BRANCH
+            sudo git pull origin $BRANCH
+            chmod +x deploy.sh
+            source ./deploy.sh
