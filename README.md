@@ -10,6 +10,35 @@ The application exposes a REST API that accepts a question about WNBA news and r
 
 ---
 
+## Architecture at a Glance
+
+```mermaid
+flowchart LR
+    Client["Client"] -->|POST /api/chat| API["Django REST API\n(ChatView)"]
+    API --> RAG["SimpleRagService"]
+
+    RAG --> Embed["EmbeddingService\n(text-embedding-ada-002)"]
+    Embed -->|query vector| VS["VectorStoreService\n(Pinecone wnba-chat-pinecone-rag)\ntop-5 chunk IDs"]
+    VS -->|chunk IDs| CS["ContentStoreService\n(Databricks Delta Table\nvia databricks-sql-connector)"]
+    CS -->|chunk text| LLM["ModelService\n(GPT-4-turbo)"]
+    RAG -->|original question| LLM
+    LLM -->|answer| API
+    API -->|{ response }| Client
+
+    subgraph Offline ["Offline ETL / Indexing (data/)"]
+        Scraper["script.py\n(web scraper)"] --> RawData["wnba_news.json"]
+        RawData --> DataPrep["data_prep.py\n(PySpark / Databricks)"]
+        DataPrep --> DeltaTables[("Databricks\nDelta Tables")]
+        DeltaTables --> VecCreate["pinecone_vector_creation.py"]
+        VecCreate --> PineconeIdx[("Pinecone Index")]
+    end
+
+    DeltaTables -.->|serves chunk text at query time| CS
+    PineconeIdx -.->|serves vectors at query time| VS
+```
+
+---
+
 ## How It Works
 
 ### Request Flow
