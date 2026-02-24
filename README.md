@@ -31,6 +31,20 @@ The Django project routes all chat traffic through Django REST Framework:
 
 `wnba_chat_api/urls.py` includes the `chatapi` URL configuration under the `/api/` prefix. `ChatView` deserializes the request via `ChatSerializer`, delegates to `SimpleRagService`, and returns the result or an appropriate HTTP error code.
 
+### Runtime Request Flow
+
+The diagram below illustrates the end-to-end runtime flow for a single chat request.
+
+![Runtime Request Flow](docs/images/runtime_request_flow.png)
+
+---
+
+## Offline ETL + Indexing Pipeline
+
+The diagram below shows the end-to-end offline pipeline that prepares data before the API serves any traffic.
+
+![Offline ETL + Indexing Pipeline](docs/images/etl_pipeline.png)
+
 ---
 
 ## What's Happening in `/data`
