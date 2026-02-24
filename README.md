@@ -33,6 +33,14 @@ The Django project routes all chat traffic through Django REST Framework:
 
 ---
 
+## Offline ETL + Indexing Pipeline
+
+The diagram below shows the end-to-end offline pipeline that prepares data before the API serves any traffic.
+
+![Offline ETL + Indexing Pipeline](docs/images/etl_pipeline.png)
+
+---
+
 ## What's Happening in `/data`
 
 The `data/` directory contains the offline ETL and indexing pipeline used to populate the vector store and Delta tables before the API serves any traffic. None of these scripts are invoked at request time.
