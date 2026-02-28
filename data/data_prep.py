@@ -87,7 +87,7 @@ from pyspark.sql.types import ArrayType, StringType
 CHUNK_SIZE = 1000
 
 @udf(returnType=ArrayType(StringType()))
-def chunk_text(text0):
+def chunk_text(text):
     if text is None:
         return []
     
