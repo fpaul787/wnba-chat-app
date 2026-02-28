@@ -87,12 +87,12 @@ from pyspark.sql.types import ArrayType, StringType
 CHUNK_SIZE = 1000
 
 @udf(returnType=ArrayType(StringType()))
-def chunk_text(text0):
+def chunk_text(text):
     if text is None:
         return []
     
     words = text.split()
-    chunks = [" ".join(words[i:i+chunk_size]) for i in range(0, len(words), CHUNK_SIZE)]
+    chunks = [" ".join(words[i:i+CHUNK_SIZE]) for i in range(0, len(words), CHUNK_SIZE)]
     return chunks
 
 # COMMAND ----------
