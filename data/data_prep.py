@@ -92,7 +92,7 @@ def chunk_text(text):
         return []
     
     words = text.split()
-    chunks = [" ".join(words[i:i+chunk_size]) for i in range(0, len(words), CHUNK_SIZE)]
+    chunks = [" ".join(words[i:i+CHUNK_SIZE]) for i in range(0, len(words), CHUNK_SIZE)]
     return chunks
 
 # COMMAND ----------
